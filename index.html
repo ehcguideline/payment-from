@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment Proof Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    (function() {
+      emailjs.init("ZMJMOg4hwQReN9P_6"); // ✅ তোমার Public Key
+    })();
+  </script>
+</head>
+<body class="bg-gray-100">
+  <div class="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl border border-gray-200">
+    <h2 class="text-xl font-bold mb-4 text-center">🧾 Payment Proof Form</h2>
+    <form id="paymentForm" class="space-y-4">
+      <div>
+        <label class="block font-medium">Username:</label>
+        <input
+          type="text"
+          name="username"
+          required
+          class="w-full border p-2 rounded"
+        />
+      </div>
+
+      <div>
+        <label class="block font-medium">Payment Reference:</label>
+        <input
+          type="text"
+          name="reference"
+          required
+          class="w-full border p-2 rounded"
+        />
+      </div>
+
+      <div>
+        <label class="block font-medium">Transaction ID:</label>
+        <input
+          type="text"
+          name="transaction"
+          required
+          class="w-full border p-2 rounded"
+        />
+      </div>
+
+      <button
+        type="submit"
+        class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("paymentForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      emailjs.sendForm(
+        "service_imo.hck",           // ✅ তোমার Service ID
+        "template_2vn0m3l",          // ✅ তোমার Template ID
+        this
+      ).then(
+        function(response) {
+          console.log("SUCCESS!", response.text);
+          alert("✅ Thank you! Wait a few minutes while we check your payment.");
+          document.getElementById("paymentForm").reset();
+        },
+        function(error) {
+          console.log("FAILED...", error.text);
+          alert("❌ Something went wrong. Please try again.");
+        }
+      );
+    });
+  </script>
+</body>
+</html>
