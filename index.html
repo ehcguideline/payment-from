@@ -1,38 +1,50 @@
 <!DOCTYPE html>
 <html lang="bn">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ethical Hacking Community Guideline</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    body {
+      background-image: linear-gradient(to right, #1e3c72, #2a5298);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+    }
+  </style>
 </head>
-<body class="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 min-h-screen flex items-center justify-center text-white">
 
-  <div class="bg-white text-gray-900 rounded-xl shadow-lg p-6 max-w-md w-full">
-    <h1 class="text-2xl font-bold mb-6 text-center text-blue-700">
-      Ethical Hacking Community Guideline
-    </h1>
-
+<body class="min-h-screen flex items-center justify-center p-4">
+  <div class="glass max-w-xl w-full p-8 text-white">
+    <h1 class="text-3xl font-bold mb-6 text-center">🛡️ Ethical Hacking Community Guideline</h1>
     <form id="paymentForm" class="space-y-4">
       <div>
-        <label class="block font-medium mb-1">আপনার নাম লিখুন:</label>
-        <input type="text" name="name" required class="w-full border p-2 rounded" />
+        <label class="block mb-1">আপনার নাম লিখুন:</label>
+        <input type="text" name="name" required class="w-full p-2 rounded bg-white text-black">
       </div>
 
       <div>
-        <label class="block font-medium mb-1">আপনার ইউজার আইডি লিখুন:</label>
-        <input type="text" name="userid" required class="w-full border p-2 rounded" />
+        <label class="block mb-1">আপনার ইউজার আইডি লিখুন:</label>
+        <input type="text" name="userId" required class="w-full p-2 rounded bg-white text-black">
       </div>
 
       <div>
-        <label class="block font-medium mb-1">ট্র‍্যাকিং কোড লিখুন:</label>
-        <input type="text" name="tracking" required class="w-full border p-2 rounded" />
+        <label class="block mb-1">ট্র‍্যাকিং কোড লিখুন:</label>
+        <input type="text" name="tracking" required class="w-full p-2 rounded bg-white text-black">
       </div>
 
       <div>
-        <label class="block font-medium mb-1">পেমেন্ট মেথড সিলেক্ট করুন:</label>
-        <select name="payment_method" required class="w-full border p-2 rounded">
-          <option value="" disabled selected>একটি পেমেন্ট মেথড বেছে নিন</option>
+        <label class="block mb-1">পেমেন্ট মেথড:</label>
+        <select name="method" required class="w-full p-2 rounded bg-white text-black">
           <option value="Bkash">Bkash</option>
           <option value="Nagad">Nagad</option>
           <option value="Rocket">Rocket</option>
@@ -40,37 +52,33 @@
       </div>
 
       <div>
-        <label class="block font-medium mb-1">শেষ ৪টি নাম্বার লিখুন:</label>
-        <input type="text" name="last4" maxlength="4" required class="w-full border p-2 rounded" />
+        <label class="block mb-1">শেষ ৪টি ডিজিট (যে নাম্বার থেকে টাকা পাঠিয়েছেন):</label>
+        <input type="text" name="last4" required maxlength="4" pattern="\d{4}" class="w-full p-2 rounded bg-white text-black">
       </div>
 
       <div>
-        <label class="block font-medium mb-1">আপনার ইমেইল লিখুন:</label>
-        <input type="email" name="email" required class="w-full border p-2 rounded" />
+        <label class="block mb-1">আপনার ইমেইল লিখুন:</label>
+        <input type="email" name="email" required class="w-full p-2 rounded bg-white text-black">
       </div>
 
-      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-        সাবমিট করুন
+      <button type="submit" class="w-full bg-green-600 hover:bg-green-700 py-2 rounded text-white font-semibold transition-transform transform hover:scale-105">
+        ✅ সাবমিট করুন
       </button>
     </form>
-
-    <p id="successMessage" class="mt-4 text-green-600 font-semibold hidden">
-      ✅ ধন্যবাদ। আপনার পেমেন্ট প্রকৃয়া সম্পন্ন হয়েছে — অনুগ্রহ করে ৭-৮ মিনিট অপেক্ষা করুন। আপনার দেওয়া ইমেইল এ একাউন্ট এর লগিন ইনফরমেশন গুলো পেয়ে যাবেন।
-    </p>
   </div>
 
   <script>
-    const form = document.getElementById('paymentForm');
-    const successMessage = document.getElementById('successMessage');
-
-    form.addEventListener('submit', function(e) {
+    document.getElementById("paymentForm").addEventListener("submit", function (e) {
       e.preventDefault();
-
-      // এখানে তুমি চাইলে EmailJS বা অন্য API দিয়ে ফর্ম ডেটা পাঠাতে পারো।
-      // এখন শুধু সাকসেস মেসেজ দেখাচ্ছে
-      successMessage.classList.remove('hidden');
-      form.reset();
+      Swal.fire({
+        icon: 'success',
+        title: 'ধন্যবাদ!',
+        text: 'আপনার পেমেন্ট প্রকৃয়া সম্পন্ন হয়েছে- অনুগ্রহ করে ৭-৮ মিনিট অপেক্ষা করুন। আপনার দেওয়া ইমেইল এ একাউন্ট এর লগিন ইনফরমেশন গুলো পেয়ে যাবেন',
+        confirmButtonText: 'ঠিক আছে'
+      });
+      e.target.reset();
     });
   </script>
 </body>
+
 </html>
